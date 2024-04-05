@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    <style>
+        .hr1 {
+            border: none;
+            border-top: 6px solid black;
+        }
+        .hr2 {
+            border: none;
+            border-top: 3px solid grey;
+        }
+        .main-logo{
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- logo-->
+    <div style="border: none;">
+        <table>
+            <tr>
+                <td>
+                    <img src="images/img.png" href="./images/img.png" vwidth="120" height="100" style="margin-left: 550px">
+                </td>
+                <td>
+                    <h1 class="main-logo">Myboard.io</h1>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- przedzialek-->
+    <hr class="hr1">
+    <h2>Logowanie</h2>
+    <hr class="hr2">
+    <!-- formularz do logowanie-->
+    <div>
+        <form>
+            <label for="email">Email:</label><br>
+            <input type="text" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br><br>
+            <button hx-post="/clicked">Login</button><br>
+        </form>
+    </div>
+</body>
+</html>

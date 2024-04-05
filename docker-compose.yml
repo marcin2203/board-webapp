@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  appdb:
+    image: appdb
+    container_name: appdb
+    build:
+      context: db
+      target: db
+    environment:
+      - POSTGRES_USER=ps
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=user_data
+    ports:
+      - 5432:5432
