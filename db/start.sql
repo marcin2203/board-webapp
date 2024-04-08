@@ -4,17 +4,17 @@ CREATE DATABASE user_data;
 -- Użyj bazy danych user_data
 \c
 
+CREATE TABLE IF NOT EXISTS userrole (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+    );
+
 CREATE TABLE IF NOT EXISTS userinfo (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(256) NOT NULL,
     role INT,
     FOREIGN KEY (role) REFERENCES userrole(id)
-);
-
-CREATE TABLE IF NOT EXISTS userrole (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS posts (

@@ -19,6 +19,7 @@ func main() {
 
 	r.HandleFunc("/main-page", SendIndex)
 	r.HandleFunc("/debug/login", login)
+	r.HandleFunc("/debug/register", register)
 
 	r.HandleFunc("/posts", postpost)
 	r.HandleFunc("/posts/{id}", getpost)
