@@ -28,7 +28,7 @@
                     <img src="images/img.png" href="./images/img.png" vwidth="120" height="100" style="margin-left: 550px">
                 </td>
                 <td>
-                    <h1 class="main-logo">Myboard.io</h1>
+                    <h1 class="main-logo">Myboard</h1>
                 </td>
             </tr>
         </table>
@@ -36,17 +36,33 @@
 
     <!-- przedzialek-->
     <hr class="hr1">
-    <h2>Logowanie</h2>
-    <hr class="hr2">
     <!-- formularz do logowanie-->
-    <div>
-        <form>
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br><br>
-            <button hx-post="/clicked">Login</button><br>
-        </form>
-    </div>
+    <table>
+        <tr>
+            <td>
+                <h2>Logowanie</h2>
+                <form action="/register" method="post">
+                    <label for="login-email">Email:</label><br>
+                    <input type="text" id="login-email" name="email"><br>
+                    <label for="login-password">Password:</label><br>
+                    <input type="password" id="login-password" name="password"><br><br>
+                    <button type="submit">Login</button><br>
+                </form>
+            </td>
+            <td>
+                <h2>Rejestracja</h2>
+                <form action="/register" method="post">
+                    <label for="register-email">Email:</label><br>
+                    <input type="text" id="register-email" name="email"><br>
+                    <label for="register-password">Password:</label><br>
+                    <input type="password" id="register-password" name="password"><br><br>
+                    <button type="submit">Register</button><br>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+
 </body>
 </html>
