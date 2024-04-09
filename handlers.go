@@ -4,9 +4,11 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type loginCredentials struct {
@@ -89,11 +91,53 @@ func register(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(creds.Email + " in db"))
 
 }
+
+type json_ids struct {
+	Ids []int `json:"ids"`
+}
+
 func postpost(w http.ResponseWriter, r *http.Request) {
 
 }
 func getpost(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	_ = vars["id"]
 
+	connStr := "user=ps password=1234 dbname=user_data sslmode=disable"
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var jsonDBids string
+	var ids_int *json_ids = &json_ids{}
+
+	err = db.QueryRow("select post_list from page").Scan(&jsonDBids)
+
+	json.Unmarshal([]byte(jsonDBids), ids_int)
+	//fmt.Println(id, err, jsonDBids, ids_int.Ids)
+	var ids string
+	ids = "("
+	for _, id := range ids_int.Ids {
+		ids += strconv.Itoa(id)
+		ids += ", "
+	}
+	ids = ids[:len(ids)-2]
+	ids += ")"
+	fmt.Println(ids)
+
+	rows, err := db.Query("select text from posts where id in" + ids)
+	fmt.Println(err)
+	db.Close()
+
+	temp := ""
+	html := ""
+	for rows.Next() {
+		rows.Scan(&temp)
+		html += temp
+		html += "<hr>"
+	}
+	w.Write([]byte(html))
 }
 func SendIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/index.html")

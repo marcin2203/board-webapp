@@ -9,10 +9,6 @@
             border: none;
             border-top: 6px solid black;
         }
-        .hr2 {
-            border: none;
-            border-top: 3px solid grey;
-        }
         .main-logo{
             display: block;
             margin: 0 auto;
@@ -21,11 +17,11 @@
 </head>
 <body>
     <!-- logo-->
-    <div style="border: none;">
-        <table>
+    <div>
+        <table style="margin: auto">
             <tr>
                 <td>
-                    <img src="images/img.png" href="./images/img.png" vwidth="120" height="100" style="margin-left: 550px">
+                    <img src="images/img.png" href="./images/img.png">
                 </td>
                 <td>
                     <h1 class="main-logo">Myboard</h1>
@@ -37,7 +33,7 @@
     <!-- przedzialek-->
     <hr class="hr1">
     <!-- formularz do logowanie-->
-    <table>
+    <table style="margin: auto">
         <tr>
             <td>
                 <h2>Logowanie</h2>
@@ -62,7 +58,8 @@
         </tr>
     </table>
 
+    <hr class="hr1">
 
-
+    <div hx-get="/posts/1" hx-trigger="load"></div>
 </body>
 </html>

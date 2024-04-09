@@ -6,7 +6,7 @@ CREATE DATABASE user_data;
 
 CREATE TABLE IF NOT EXISTS userrole (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(60) NOT NULL
     );
 
 CREATE TABLE IF NOT EXISTS userinfo (
@@ -81,9 +81,9 @@ INSERT INTO comments (text, id_post) VALUES
 
 -- Wstawianie danych do tabeli page
 INSERT INTO page (post_list) VALUES
-    ('{"ids": [1, 2]}'),
-    ('{"ids": [10]}')
-    ('{"ids": [3,5,6]}')
+    ('{"ids": [7,8,9]}'),
+    ('{"ids": [10]}'),
+    ('{"ids": [3,5,6]}'),
     ('{"ids": [7,8,9]}');
 
 -- Wstawianie danych do tabeli postreactions
