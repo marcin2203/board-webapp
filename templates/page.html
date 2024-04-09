@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>page</title>
 </head>
 <body>
-$END$
+    <!-- logo -->
+    <div>
+        <table style="margin: auto">
+            <tr>
+                <td>
+                    <img src="images/img.png" href="./images/img.png">
+                </td>
+                <td>
+                    <h1 class="main-logo">Myboard</h1>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <input type="text" id="myInput" placeholder="tagi...">
+
+        <script>
+            function sendText() {
+                // Pobranie wprowadzonego tekstu z pola wejściowego
+                var text = document.getElementById("myInput").value;
+
+                // Przygotowanie danych do wysłania (w formacie JSON)
+                var data = JSON.stringify({"text": text});
+
+                // Adres URL, na który zostanie wysłane żądanie POST
+                var url = "adres_url_do_wyslania_danych";
+
+                // Użycie Fetch do wysłania żądania POST
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: data
+                })
+            }
+        </script>
+    </div>
+
+    <div hx-get="/posts/1" hx-trigger="load" style="margin: auto"></div>
+
 </body>
 </html>
