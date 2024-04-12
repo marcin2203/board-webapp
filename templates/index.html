@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/json-enc.js"></script>
     <style>
         .hr1 {
             border: none;
@@ -33,26 +34,32 @@
     <!-- przedzialek-->
     <hr class="hr1">
     <!-- formularz do logowanie-->
-    <table style="margin: auto">
+    <table id="log-reg-panel"style="margin: auto">
         <tr>
             <td>
                 <h2>Logowanie</h2>
-                <form action="/register" method="post">
-                    <label for="login-email">Email:</label><br>
-                    <input type="text" id="login-email" name="email"><br>
-                    <label for="login-password">Password:</label><br>
-                    <input type="password" id="login-password" name="password"><br><br>
-                    <button type="submit">Login</button><br>
+                <form
+                        hx-target="#log-reg-panel"
+                        hx-post="/login"
+                        hx-ext="json-enc"
+                >
+                    <input type="text" name="email" placeholder="Name" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
+                    <button type="submit">Login</button>
                 </form>
+
+                <div id="response"></div>
             </td>
-            <td>
+            <td id = "register-tab">
                 <h2>Rejestracja</h2>
-                <form action="/register" method="post">
-                    <label for="register-email">Email:</label><br>
-                    <input type="text" id="register-email" name="email"><br>
-                    <label for="register-password">Password:</label><br>
-                    <input type="password" id="register-password" name="password"><br><br>
-                    <button type="submit">Register</button><br>
+                <form
+                hx-target="#register-tab"
+                hx-post="/register"
+                hx-ext="json-enc"
+                >
+                    <input type="text" name="email" placeholder="Your email" required><br>
+                    <input type="password" name="password" placeholder="Password" required><br>
+                    <button type="submit">Login</button>
                 </form>
             </td>
         </tr>

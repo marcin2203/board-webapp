@@ -52,8 +52,8 @@ CREATE TABLE IF NOT EXISTS comreactions (
 
 -- Wstawianie danych do tabeli userinfo
 INSERT INTO userinfo (email, password, role) VALUES
-                                                 ('user1@example.com', 'password123', 1),
-                                                 ('user2@example.com', 'securepass456', 2);
+                                                 ('user1@example.com', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 1),
+                                                 ('user2@example.com', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 2);
 
 -- Wstawianie danych do tabeli userrole
 INSERT INTO userrole (name) VALUES

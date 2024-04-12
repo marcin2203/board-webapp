@@ -17,12 +17,14 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	r.HandleFunc("/main-page", SendIndex)
-	r.HandleFunc("/debug/login", login)
-	r.HandleFunc("/debug/register", register)
+	r.HandleFunc("/main-page", sendIndex)
 
-	r.HandleFunc("/posts", postpost)
-	r.HandleFunc("/posts/{id}", getpost)
+	r.HandleFunc("/posts", postPost)
+	r.HandleFunc("/posts/{id}", getPost)
+
+	r.HandleFunc("/login", login)
+	r.HandleFunc("/register", register)
+	//r.HandleFunc("/debug/getClaims", decriptedJWT)
 
 	log.Fatal(srv.ListenAndServe())
 }
