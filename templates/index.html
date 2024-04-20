@@ -30,10 +30,10 @@
             </tr>
         </table>
     </div>
-
-    <!-- przedzialek-->
     <hr class="hr1">
+
     <!-- formularz do logowanie-->
+
     <table id="log-reg-panel"style="margin: auto">
         <tr>
             <td>
@@ -67,19 +67,18 @@
 
     <hr class="hr1">
 
-    <div>
+    <div style="display: block; margin: 0 auto;">
         <input class="form-control" type="search"
-               name="search" placeholder="Begin Typing To Search Users..."
-               hx-post="/search"
+               name="search" placeholder="Type tags you are intrested..."
+               hx-post="/tag"
                hx-trigger="input changed delay:500ms, search"
                hx-target="#search-results"
-               hx-indicator=".htmx-indicator">
+               hx-indicator=".htmx-indicator"
+               style="width: 300px;">
         <table class="table">
             <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
+                <th>tags</th>
             </tr>
             </thead>
             <tbody id="search-results">

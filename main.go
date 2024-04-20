@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -18,9 +19,11 @@ func main() {
 	}
 
 	r.HandleFunc("/main-page", sendIndex)
+	r.HandleFunc("/tag", getTags)
 
 	r.HandleFunc("/posts", postPost)
-	r.HandleFunc("/posts/{id}", getPost)
+	r.HandleFunc("/posts/{id}", getPostsFromPage)
+	r.HandleFunc("/posts/tag/{tag}", getPostsWithTag)
 
 	r.HandleFunc("/login", login)
 	r.HandleFunc("/register", register)

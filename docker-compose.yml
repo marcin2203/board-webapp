@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  appdb:
+  db:
     image: appdb
     container_name: appdb
     build:
@@ -10,6 +10,7 @@ services:
     environment:
       - POSTGRES_USER=ps
       - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=user_data
+      - POSTGRES_DB=db
     ports:
       - 5432:5432
+  

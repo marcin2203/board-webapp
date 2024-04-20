@@ -4,11 +4,13 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/mux"
 	"io"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
+
+	"github.com/gorilla/mux"
 )
 
 type loginCredentials struct {
@@ -33,7 +35,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	// SQL
-	connStr := "user=ps password=1234 dbname=user_data sslmode=disable"
+	connStr := "user=ps password=1234 dbname=db sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +87,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// SQL
-	connStr := "user=ps password=1234 dbname=user_data sslmode=disable"
+	connStr := "user=ps password=1234 dbname=db sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 
 	if err != nil {
@@ -111,11 +113,13 @@ type json_ids struct {
 func postPost(w http.ResponseWriter, r *http.Request) {
 
 }
-func getPost(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	_ = vars["id"]
 
-	connStr := "user=ps password=1234 dbname=user_data sslmode=disable"
+// delete
+func getPostsFromPage(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	fmt.Println()
+	connStr := "user=ps password=1234 dbname=db sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -124,7 +128,7 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 	var jsonDBids string
 	var ids_int *json_ids = &json_ids{}
 
-	err = db.QueryRow("select post_list from page").Scan(&jsonDBids)
+	err = db.QueryRow("select post_list from page where id =$1", id).Scan(&jsonDBids)
 
 	json.Unmarshal([]byte(jsonDBids), ids_int)
 	//fmt.Println(id, err, jsonDBids, ids_int.Ids)
@@ -151,6 +155,52 @@ func getPost(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Write([]byte(html))
 }
+
+func getPostsWithTag(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	tag := vars["tag"]
+	fmt.Println(vars, tag)
+
+	db := getDB()
+
+	//TODO opitimalization
+	rows, err := db.Query("select p2.text from (posts p1 join posts_tags pt on p1.id = pt.post_id) p2 join (select  * from tags where tag like '" + tag + "') t on p2.tag_id = t.id;")
+	db.Close()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	temp := ""
+	html := ""
+	for rows.Next() {
+		rows.Scan(&temp)
+		html += temp
+		html += "<hr>"
+	}
+
+	w.Write([]byte(html))
+}
+
+func getTags(w http.ResponseWriter, r *http.Request) {
+	db := getDB()
+	rows, err := db.Query("select tag from tags")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	search := r.FormValue("search")
+
+	var temp string
+	for rows.Next() {
+		rows.Scan(&temp)
+		if strings.Contains(temp, search) {
+			w.Write([]byte("<td> <a href=posts/tag/" + temp + ">" + temp + "</a> </td>"))
+		}
+	}
+}
+
 func sendIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/index.html")
 }
