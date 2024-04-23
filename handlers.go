@@ -1,11 +1,14 @@
 package main
 
 import (
+	"app/templates"
+	"context"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"strings"
@@ -51,7 +54,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println(row, email, password)
 	if creds.Email == sqlemail && encryptPasswordSHA256(creds.Password) == sqlpassword {
 		cookie := http.Cookie{
-			Name:     "exampleCookie",
+			Name:     "auth",
 			Value:    "Bearer " + getJWT(sqlemail, sqlrole),
 			Path:     "/",
 			MaxAge:   3600,
@@ -104,6 +107,39 @@ func register(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(creds.Email + " is in db!"))
 
+}
+
+func isEmailInDb(email string) bool {
+	db := getDB()
+	defer db.Close()
+
+	var sqlemail string
+	row := db.QueryRow(
+		"select email from userinfo where email='" + email + "'")
+	row.Scan(&sqlemail)
+	fmt.Println("arg: ", email, "sql: ", sqlemail, email == sqlemail)
+
+	return email == sqlemail
+}
+
+func isUserLoged(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("isUserLoged func")
+
+	jwt, err := r.Cookie("auth")
+	if err != nil {
+		return
+	}
+
+	// fmt.Println("jwt", jwt.Value)
+	claims := decriptedJWT(jwt.Value)
+
+	// fmt.Println("claims   ", claims, claims.Email)
+
+	if isEmailInDb(claims.Email) {
+		w.Write([]byte("jest zalogowany"))
+	} else {
+		w.Write([]byte("nie jest zalogowany"))
+	}
 }
 
 type json_ids struct {
@@ -186,6 +222,7 @@ func getPostsWithTag(w http.ResponseWriter, r *http.Request) {
 func getTags(w http.ResponseWriter, r *http.Request) {
 	db := getDB()
 	rows, err := db.Query("select tag from tags")
+	db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -200,7 +237,49 @@ func getTags(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+func getRandomPost(w http.ResponseWriter, r *http.Request) {
+	db := getDB()
+	//TODO randomness
+	defer db.Close()
+	row := db.QueryRow("select count(*) from posts ")
 
+	var n int
+	row.Scan(&n)
+
+	fmt.Println(n, rand.Intn(n))
+
+	rows, err := db.Query("select text from posts")
+
+	fmt.Println(err)
+
+	var temp string
+	i := rand.Intn(n)
+	for rows.Next() {
+		rows.Scan(&temp)
+		if i < 0 {
+			break
+		}
+		i--
+	}
+	fmt.Println(temp)
+	w.Write([]byte(temp))
+
+}
 func sendIndex(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "templates/index.html")
+}
+
+func sendPage(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "templates/page.html")
+}
+
+// type Mycontext struct {
+// 	context.Context
+// 	w http.ResponseWriter
+// 	r *http.Request
+// }
+
+func sendProfilePage(w http.ResponseWriter, r *http.Request) {
+	//result
+	templates.ProfilePage("my email").Render(context.TODO(), w)
 }

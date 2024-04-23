@@ -2,11 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>page</title>
+    <title>view post</title>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    <style>
+        .hr1 {
+            border: none;
+            border-top: 6px solid black;
+        }
+        .main-logo{
+            display: block;
+            margin: 0 auto;
+        }
+        .column {
+            float: left;
+            padding: 10px;
+            height: 300px; /* Should be removed. Only for demonstration */
+        }
+
+        .left {
+            width: 15%;
+        }
+
+        .right {
+            width: 70%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+    </style>
 </head>
 <body>
-    <!-- logo -->
-    <div>
+    <div id="header">
         <table style="margin: auto">
             <tr>
                 <td>
@@ -20,32 +50,13 @@
     </div>
 
     <div>
-        <input type="text" id="myInput" placeholder="tagi...">
-
-        <script>
-            function sendText() {
-                // Pobranie wprowadzonego tekstu z pola wejściowego
-                var text = document.getElementById("myInput").value;
-
-                // Przygotowanie danych do wysłania (w formacie JSON)
-                var data = JSON.stringify({"text": text});
-
-                // Adres URL, na który zostanie wysłane żądanie POST
-                var url = "adres_url_do_wyslania_danych";
-
-                // Użycie Fetch do wysłania żądania POST
-                fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: data
-                })
-            }
-        </script>
+        <div class="column left">Menu</div>
+        <div class="column right">
+            Post <hr>
+            <div id="post-view" hx-trigger="load" hx-get="/post" hx-target="#post-view">
+                post tu?
+            </div>
+        </div>
     </div>
-
-    <div hx-get="/posts/1" hx-trigger="load" style="margin: auto"></div>
-
 </body>
 </html>

@@ -19,14 +19,18 @@ func main() {
 	}
 
 	r.HandleFunc("/main-page", sendIndex)
+	r.HandleFunc("/page", sendPage)
+	r.HandleFunc("/profile", sendProfilePage)
 	r.HandleFunc("/tag", getTags)
 
+	r.HandleFunc("/post", getRandomPost)
 	r.HandleFunc("/posts", postPost)
 	r.HandleFunc("/posts/{id}", getPostsFromPage)
 	r.HandleFunc("/posts/tag/{tag}", getPostsWithTag)
 
 	r.HandleFunc("/login", login)
 	r.HandleFunc("/register", register)
+	r.HandleFunc("/debug", isUserLoged)
 	//r.HandleFunc("/debug/getClaims", decriptedJWT)
 
 	log.Fatal(srv.ListenAndServe())

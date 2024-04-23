@@ -14,11 +14,32 @@
             display: block;
             margin: 0 auto;
         }
+        .column {
+            float: left;
+            padding: 10px;
+            height: 300px; /* Should be removed. Only for demonstration */
+        }
+
+        .left {
+            width: 15%;
+        }
+
+        .right {
+            width: 70%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
     </style>
 </head>
+
 <body>
     <!-- logo-->
-    <div>
+    <div id="header">
         <table style="margin: auto">
             <tr>
                 <td>
@@ -30,9 +51,10 @@
             </tr>
         </table>
     </div>
+
     <hr class="hr1">
 
-    <!-- formularz do logowanie-->
+        <!-- formularz do logowanie-->
 
     <table id="log-reg-panel"style="margin: auto">
         <tr>
@@ -42,14 +64,15 @@
                         hx-target="#log-reg-panel"
                         hx-post="/login"
                         hx-ext="json-enc"
-                >
+                    >
                     <input type="text" name="email" placeholder="Name" required><br>
                     <input type="password" name="password" placeholder="Password" required><br>
                     <button type="submit">Login</button>
-                </form>
+                    </form>
 
                 <div id="response"></div>
-            </td>
+                </td>
+
             <td id = "register-tab">
                 <h2>Rejestracja</h2>
                 <form
@@ -69,12 +92,12 @@
 
     <div style="display: block; margin: 0 auto;">
         <input class="form-control" type="search"
-               name="search" placeholder="Type tags you are intrested..."
-               hx-post="/tag"
-               hx-trigger="input changed delay:500ms, search"
-               hx-target="#search-results"
-               hx-indicator=".htmx-indicator"
-               style="width: 300px;">
+            name="search" placeholder="Type tags you are intrested..."
+            hx-post="/tag"
+            hx-trigger="input changed delay:500ms, search"
+            hx-target="#search-results"
+            hx-indicator=".htmx-indicator"
+            style="width: 300px;">
         <table class="table">
             <thead>
             <tr>
@@ -87,7 +110,22 @@
     </div>
 
     <hr class="hr1">
+    </div>
 
-    <div hx-get="/posts/1" hx-trigger="load"></div>
+    <div class="row">
+        <div id="menu" class="column left">
+            MENU <br>
+            <button onclick="redirectToPost()">Random</button>
+            <script>
+                function redirectToPost() {
+                    window.location.href = "/page";
+                }
+            </script>
+        </div>
+        <div class="column right" hx-get="/posts/1" hx-trigger="load">
+            Posty
+        </div>
+    </div>
+
 </body>
 </html>

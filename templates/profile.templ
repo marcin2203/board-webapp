@@ -1,0 +1,80 @@
+package templates
+
+templ ProfilePage(email string) {
+<html lang="en">
+  <header data-testid="headerTemplate">
+    <title>profile</title>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    <style>
+        .column {
+        float: left;
+        }
+
+        .left {
+        width: 25%;
+        }
+
+        .right {
+        width: 75%;
+        }
+
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        footer {
+            width: 100%;
+            position:fixed;
+            text-align: center;
+            padding: 3px;
+            bottom:0px;
+            background-color: black;
+            color: white;
+        }   
+</style>
+  </header>
+  <body>
+    <header>
+        Profil: { email }
+    </header>
+
+    <hr></hr>
+
+    <main>
+        <div class="column left">
+            Menu-col1
+            <hr></hr>
+
+            <table>
+                    <tr>
+                        <button type="button" >POKAŻ DANE</button>
+                    </tr>
+                    <tr>
+                        <button type="button" >ZMIEN HASLO</button>
+                    </tr>
+                    <tr>
+                        <button type="button" >ZMIEN EMAIL</button>
+                    </tr>
+                    <tr>
+                        <button type="button" >USUN</button>
+                    </tr>
+            </table>
+
+        </div>
+        <div class="column right">
+            Menu-col2
+            <hr></hr>
+        </div>
+    </main>
+
+    <hr></hr>
+    
+    <footer>
+        <p>Author: Hege Refsnes<br></br>
+        <a>hege@example.com</a></p>
+    </footer>
+
+  </body>
+</html>
+}
