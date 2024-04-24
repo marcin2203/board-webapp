@@ -109,6 +109,46 @@ func register(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func userRouter(w http.ResponseWriter, r *http.Request) {
+	jwt := r.Header.Get("Authorization")
+	fmt.Println(jwt)
+	// jwt, err := r.Cookie("auth")
+	fmt.Println("ROUTER")
+
+	// if err != nil {
+	// 	w.WriteHeader(403)
+	// 	return
+	// }
+
+	claims := decriptedJWT(jwt)
+	fmt.Println("claims:", claims)
+	if !isUserLoged(claims.Email) {
+		return
+	}
+
+	method := r.Method
+	fmt.Println(method)
+	switch method {
+	case "DELETE":
+		{
+			_ = deleteUser(claims.Email)
+			w.Write([]byte("DELETE USER of: " + claims.Email))
+		}
+	case "GET":
+		sendProfilePage(w, r)
+
+	}
+}
+
+func deleteUser(email string) error {
+	fmt.Println("DELETE SUER")
+	db := getDB()
+	defer db.Close()
+	_, err := db.Exec("delete from userinfo where email='" + email + "'")
+	fmt.Println(err)
+	return err
+}
+
 func isEmailInDb(email string) bool {
 	db := getDB()
 	defer db.Close()
@@ -117,28 +157,19 @@ func isEmailInDb(email string) bool {
 	row := db.QueryRow(
 		"select email from userinfo where email='" + email + "'")
 	row.Scan(&sqlemail)
-	fmt.Println("arg: ", email, "sql: ", sqlemail, email == sqlemail)
+	// fmt.Println("arg: ", email, "sql: ", sqlemail, email == sqlemail)
 
 	return email == sqlemail
 }
 
-func isUserLoged(w http.ResponseWriter, r *http.Request) {
+func isUserLoged(email string) bool {
 	fmt.Println("isUserLoged func")
-
-	jwt, err := r.Cookie("auth")
-	if err != nil {
-		return
-	}
-
-	// fmt.Println("jwt", jwt.Value)
-	claims := decriptedJWT(jwt.Value)
-
-	// fmt.Println("claims   ", claims, claims.Email)
-
-	if isEmailInDb(claims.Email) {
-		w.Write([]byte("jest zalogowany"))
+	if isEmailInDb(email) {
+		fmt.Println("Jest w bazie")
+		return true
 	} else {
-		w.Write([]byte("nie jest zalogowany"))
+		fmt.Println("Nie jest w bazie")
+		return false
 	}
 }
 
@@ -154,7 +185,6 @@ func postPost(w http.ResponseWriter, r *http.Request) {
 func getPostsFromPage(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	fmt.Println()
 	connStr := "user=ps password=1234 dbname=db sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -282,4 +312,9 @@ func sendPage(w http.ResponseWriter, r *http.Request) {
 func sendProfilePage(w http.ResponseWriter, r *http.Request) {
 	//result
 	templates.ProfilePage("my email").Render(context.TODO(), w)
+}
+
+func sendMain(w http.ResponseWriter, r *http.Request) {
+	//result
+	templates.Main().Render(context.TODO(), w)
 }

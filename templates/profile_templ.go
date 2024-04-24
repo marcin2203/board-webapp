@@ -36,7 +36,7 @@ func ProfilePage(email string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header><hr><main><div class=\"column left\">Menu-col1\r<hr><table><tr><button type=\"button\">POKAŻ DANE</button></tr><tr><button type=\"button\">ZMIEN HASLO</button></tr><tr><button type=\"button\">ZMIEN EMAIL</button></tr><tr><button type=\"button\">USUN</button></tr></table></div><div class=\"column right\">Menu-col2\r</div></main><hr><footer><p>Author: Hege Refsnes<br><a>hege@example.com</a></p></footer></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header><hr><main><div class=\"column left\">Menu-col1\r<hr><table><tr><button type=\"button\">POKAŻ DANE</button></tr><tr><button type=\"button\">ZMIEN HASLO</button></tr><tr><button type=\"button\">ZMIEN EMAIL</button></tr><tr><button type=\"button\">USUN</button></tr></table></div><div class=\"column right\">Menu-col2\r<hr></div></main><hr><footer><p>Author: Hege Refsnes<br><a>hege@example.com</a></p></footer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

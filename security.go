@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	_ "encoding/json"
+
 	"github.com/cristalhq/jwt/v5"
 )
 
@@ -20,7 +21,9 @@ func encryptPasswordSHA256(password string) string {
 
 func decriptedJWT(token string) Claims {
 	var myClaims Claims
-	token = token[7:]
+	if token[0:1] == "B" {
+		token = token[7:]
+	}
 	jwtToken, _ := jwt.ParseNoVerify([]byte(token))
 	json.Unmarshal(jwtToken.Claims(), &myClaims)
 	return myClaims

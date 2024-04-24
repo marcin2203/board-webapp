@@ -20,7 +20,7 @@ func main() {
 
 	r.HandleFunc("/main-page", sendIndex)
 	r.HandleFunc("/page", sendPage)
-	r.HandleFunc("/profile", sendProfilePage)
+	r.HandleFunc("/profile", userRouter)
 	r.HandleFunc("/tag", getTags)
 
 	r.HandleFunc("/post", getRandomPost)
@@ -30,7 +30,8 @@ func main() {
 
 	r.HandleFunc("/login", login)
 	r.HandleFunc("/register", register)
-	r.HandleFunc("/debug", isUserLoged)
+	// r.HandleFunc("/debug", isUserLoged)
+	r.HandleFunc("/debug/main-page", sendMain)
 	//r.HandleFunc("/debug/getClaims", decriptedJWT)
 
 	log.Fatal(srv.ListenAndServe())

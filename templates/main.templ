@@ -1,0 +1,99 @@
+package templates
+
+templ SearchBar(){
+<div style="display: block; margin: 0 auto; padding-top: 10px;">
+        <input class="form-control" type="search"
+            name="search" placeholder="Type tags you are intrested..."
+            hx-post="/tag"
+            hx-trigger="input changed delay:500ms, search"
+            hx-target="#search-results"
+            hx-indicator=".htmx-indicator"
+            style="width: 300px;"></input>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>tags</th>
+            </tr>
+            </thead>
+            <tbody id="search-results">
+            </tbody>
+        </table>
+    </div>
+}
+
+templ Main(){
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <script src="https://unpkg.com/htmx.org@1.9.11" integrity="sha384-0gxUXCCR8yv9FM2b+U3FDbsKthCI66oH5IA9fHppQq9DDMHuMauqq1ZHBpJxQ0J0" crossorigin="anonymous"></script>
+    <title>Moja Strona</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e6e6ff; /* ciemniejszy niebieski */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            background-color: #85a3ff; /* jasny niebieski */
+            color: #ffffff; /* biały tekst */
+            padding: 10px;
+            height: 6vh;
+        }
+
+        footer {
+            background-color: #4d68b8; /* ciemniejszy niebieski */
+            height: 6vh;
+        }
+
+        #major {
+        width: 100%;
+        border: 1px solid black;
+        }
+
+    #one {
+        width: auto;
+        float: left;
+        background-color: #caddfc;
+        height: 80vh;
+        width: 10vh;
+    }
+
+    #two {
+        width:auto;
+        padding-left: 90px;
+        min-width:100%;
+        background-color: #deeafc;
+        height: 80vh;
+        width: 80vh;
+    }
+    #bottom{
+        width: 100vh;
+        background-color: #8f9eb5;
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Board</h1>
+    </header>
+    <main id="major">
+        <div id="one">Hello</div>
+        <div id="two">
+            @SearchBar()
+        </div>
+        <div id="bottom">TU cos</div>
+    </main>
+    <footer>
+        Autor: MK
+    </footer>
+</body>
+</html>
+}
