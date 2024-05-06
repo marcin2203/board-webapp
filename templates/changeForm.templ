@@ -1,0 +1,32 @@
+package templates
+
+templ ChangeForm(){
+<html lang="en">
+<head>
+<meta charset="UTF-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+<title>Formularz</title>
+</head>
+<body>
+
+<form action="http://localhost:1000/profile" method="post">
+  <div>
+    <label for="email">Email:</label>
+    <input type="checkbox" id="email" name="email"></input>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="checkbox" id="password" name="password"></input>
+  </div>
+  <div>
+    <label for="value">Value:</label>
+    <textarea id="value" name="value"></textarea>
+  </div>
+  <div>
+    <input type="submit" value="Submit"></input>
+  </div>
+</form>
+
+</body>
+</html>
+}

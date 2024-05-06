@@ -57,8 +57,24 @@ templ ProfilePage(email string) {
                         <button type="button" >ZMIEN EMAIL</button>
                     </tr>
                     <tr>
-                        <button type="button" >USUN</button>
+                        <button type="button" id="deleteButton">USUN</button>
                     </tr>
+                    <script>
+                        document.getElementById('deleteButton').addEventListener('click', function() {
+                        fetch('http://localhost:1000/profile', {
+                            method: 'DELETE',
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                            }
+                            // Tutaj możesz obsłużyć sukces usuwania
+                        })
+                        .catch(error => {
+                            console.error('There was a problem with the DELETE operation:', error);
+                        });
+                        });
+                    </script>
             </table>
 
         </div>
